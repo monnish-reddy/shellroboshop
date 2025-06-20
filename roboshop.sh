@@ -8,7 +8,7 @@ DOMAIN_NAME="monnish.com"
 for instance in ${INSTANCES[@]}
 do
     INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro --security-group-ids sg-0ff3831b55dab144b --tag-specifications "ResourceType=instance,Tags=[{Key=Name, Value=$instance}]" --query "Instances[0].InstanceId" --output text)
-    if [ $instance -ne "frontend" ]
+    if [ $instance != "frontend" ]
     then    
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
         RECORD_NAME="$instance.$DOMAIN_NAME"
